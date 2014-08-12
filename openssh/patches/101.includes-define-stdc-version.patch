@@ -1,0 +1,14 @@
+diff --git a/includes.h b/includes.h
+index 07bcd89..b6d9996 100644
+--- a/includes.h
++++ b/includes.h
+@@ -21,6 +21,9 @@
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE /* activate extra prototypes for glibc */
+ #endif
++#ifndef __STDC_VERSION__
++#define __STDC_VERSION__    199901L
++#endif
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h> /* For CMSG_* */
