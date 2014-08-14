@@ -17,7 +17,7 @@ define Package/aria2
 	DEFAULT:=y
 	TITLE:=Aria2
 	URL:=http://aria2.sourceforge.net
-	DEPENDS:=+libopenssl +libz +libstdcpp
+	DEPENDS:=+libopenssl +zlib +libstdcpp
 endef
 
 define Package/aria2/description
@@ -26,7 +26,6 @@ endef
 
 TARGET_CFLAGS+=-fPIC 
 TARGET_CXXFLAGS+=-fPIC
-TARGET_LDFLAGS+=-lstdc++
 define Build/Compile
 	$(call Build/Compile/Default, -f Makefile CFLAGS="$(TARGET_CFLAGS)")
 endef
