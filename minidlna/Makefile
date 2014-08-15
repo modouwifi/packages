@@ -12,28 +12,29 @@ PKG_MD5SUM:=26484a84af3fceafdee26595aae097f7
 include $(INCLUDE_DIR)/package.mk
 
 define Package/minidlna
-	SECTION:=net
-	CATEGORY:=Network
+	SECTION:=multimedia
+	CATEGORY:=Multimedia
 	DEFAULT:=y
 	TITLE:=Minilna
 	URL:=http://minidlna.sourceforge.net
-	DEPENDS:=+libopenssl +libz +libstdcpp
+	DEPENDS:=+libexif +jpeg +libid3tag \
+		+libFLAC +libvorbis +libsqlite3 +libav
 endef
 
 define Package/minidlna/description
-	Aria2
+	MinidLNA
 endef
 
-TARGET_CFLAGS+=-fPIC 
-TARGET_CXXFLAGS+=-fPIC
-TARGET_LDFLAGS+=-lstdc++
+TARGET_CFLAGS+=-fPIC \
+			   -I$(STAGING_DIR)/root-ramips/usr/include
+TARGET_CXXFLAGS+=-fPIC \
+				 -I$(STAGING_DIR)/root-ramips/usr/include
 define Build/Compile
 	$(call Build/Compile/Default, -f Makefile CFLAGS="$(TARGET_CFLAGS)")
 endef
 
 define Build/Configure
-	$(call Build/Configure/Default, \
-		--prefix=/usr)
+	$(call Build/Configure/Default, --prefix=/usr CFLAGS="$(TARGET_CFLAGS)")
 endef
 
 define Package/minidlna/install
