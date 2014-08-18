@@ -34,7 +34,7 @@ define Build/Compile
 endef
 
 define Build/Configure
-	$(call Build/Configure/Default, --prefix=/usr CFLAGS="$(TARGET_CFLAGS)")
+	$(call Build/Configure/Default, --prefix=/usr LDFLAGS="$(TARGET_LDFLAGS)" CFLAGS="$(TARGET_CFLAGS)")
 endef
 
 define Package/minidlna/install

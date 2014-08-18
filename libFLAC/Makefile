@@ -15,7 +15,7 @@ define Package/libFLAC
 	CATEGORY:=Libraries
 	TITLE:=libFLAC
 	URL:=http://mad.sourceforge.net
-	DEPENDS:=+libiconv +libogg
+	DEPENDS:=+libiconv +libogg +libstdcpp
 endef
 
 define Package/libFLAC/description
@@ -26,22 +26,17 @@ TARGET_CFLAGS += -fPIC
 TARGET_CXXFLAGS += -fPIC
 define Build/Compile
 	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
-		DESTDIR="$(PKG_INSTALL_DIR)" \
-		all install
+		DESTDIR="$(PKG_INSTALL_DIR)" all install
 endef
 
-TARGET_LDFLAGS += -logg -liconv
 define Build/Configure
 	cd $(PKG_BUILD_DIR) && \
-		CC="$(TARGET_CC)" LDLAGS="$(TARGET_LDFLAGS)" \
-		./configure \
-		--prefix=/usr \
-		--with-ogg="$(STAGING_DIR)/usr" \
-		--with-libiconv-prefix="$(STAGING_DIR)/usr" \
-		--host=$(ARCH)-linux \
-	    --disable-thorough-tests \
-		--disable-oggtest \
-		--disable-doxygen-docs
+		CFLAGS="-fPIC" \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
+		./configure --prefix=/usr --host=mipsel-linux \
+		--with-ogg="$(STAGING_DIR)/usr" --enable-static \
+		--disable-thorough-tests --disable-oggtest \
+		--disable-doxygen-docs LIBS="-logg -lstdc++"
 endef
 
 define Build/InstallDev

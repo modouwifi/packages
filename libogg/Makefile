@@ -32,7 +32,7 @@ endef
 
 define Build/Configure
 	cd $(PKG_BUILD_DIR) && \
-		CC=mipsel-linux-cc CFLAGS="-fPIC" \
+		CC="mipsel-linux-cc" CFLAGS="-fPIC" \
 		./configure \
 		--prefix=/usr \
 		--host=mipsel-linux

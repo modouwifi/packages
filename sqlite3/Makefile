@@ -27,7 +27,7 @@ endef
 TARGET_CFLAGS+=-fPIC 
 TARGET_CXXFLAGS+=-fPIC
 define Build/Compile
-	$(call Build/Compile/Default, -f Makefile)
+	$(MAKE) -C $(PKG_BUILD_DIR) DESTDIR="$(PKG_INSTALL_DIR)" all install
 endef
 
 define Build/Configure
@@ -41,19 +41,18 @@ define Build/Configure
 		--with-sysroot=$(STAGING_DIR)/lib 
 endef
 
-HEADERS= $(PKG_BUILD_DIR)/sqlite3.h \
-		 $(PKG_BUILD_DIR)/sqlite3ext.h
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libsqlite3.{a,so,so.0,so.0.8.6} $(1)/usr/lib
+
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/sqlite3.h $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/sqlite3ext.h $(1)/usr/include
+endef
 
 define Package/sqlite3/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/.libs/libsqlite3.so.0.8.6 $(1)/usr/lib/libsqlite3.so.0.8.6
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/.libs/libsqlite3.so $(1)/usr/lib/libsqlite3.so
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/.libs/libsqlite3.so.0 $(1)/usr/lib/libsqlite3.so.0
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/.libs/libsqlite3.a $(1)/usr/lib/libsqlite3.a
-	$(TARGET_RANLIB) $(1)/usr/lib/libsqlite3.a
-
-	$(INSTALL_DIR) $(1)/usr/include
-	$(INSTALL_DATA) $(HEADERS) $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libsqlite3.{a,so,so.0,so.0.8.6} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,sqlite3))

@@ -26,26 +26,31 @@ endef
 TARGET_CFLAGS += -fPIC 
 TARGET_CXXFLAGS += -fPIC
 define Build/Compile
-	$(call Build/Compile/Default, -f Makefile CFLAGS="$(TARGET_CFLAGS)")
+	$(MAKE) $(PKG_JOBS) -C \
+		$(PKG_BUILD_DIR) DESTDIR="$(PKG_INSTALL_DIR)"
 endef
 
 TARGET_AR += -acs
 define Build/Configure
-	$(call Build/Configure/Default, --prefix=/usr \
+	@echo "$(PKG_INSTALL_DIR)" > /opt/working/test_jpeg.txt
+	$(call Build/Configure/Default, prefix=$(PKG_INSTALL_DIR) \
 		--enable-static --enable-shared)
+endef
+
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/.libs/libjpeg.{a,so,so.62,so.62.0.0} $(1)/usr/lib
+
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_BUILD_DIR)/jpeglib.h $(1)/usr/include/jpeglib.h
+	$(CP) $(PKG_BUILD_DIR)/jconfig.h $(1)/usr/include/jconfig.h
+	$(CP) $(PKG_BUILD_DIR)/jmorecfg.h $(1)/usr/include/jmorecfg.h
+	$(CP) $(PKG_BUILD_DIR)/jerror.h $(1)/usr/include/jerror.h
 endef
 
 define Package/jpeg/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/.libs/libjpeg.a $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/.libs/libjpeg.so* $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/.libs/libjpeg.so.* $(1)/usr/lib
-
-	$(INSTALL_DIR) $(1)/usr/include
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/jpeglib.h $(1)/usr/include/jpeglib.h
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/jconfig.h $(1)/usr/include/jconfig.h
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/jmorecfg.h $(1)/usr/include/jmorecfg.h
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/jerror.h $(1)/usr/include/jerror.h
+	$(CP) $(PKG_BUILD_DIR)/.libs/libjpeg.{a,so,so.62,so.62.0.0} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,jpeg))
