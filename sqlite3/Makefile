@@ -46,8 +46,8 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libsqlite3.{a,so,so.0,so.0.8.6} $(1)/usr/lib
 
 	$(INSTALL_DIR) $(1)/usr/include
-	$(CP) $(PKG_INSTALL_DIR)/sqlite3.h $(1)/usr/include
-	$(CP) $(PKG_INSTALL_DIR)/sqlite3ext.h $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/sqlite3.h $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/sqlite3ext.h $(1)/usr/include
 endef
 
 define Package/sqlite3/install
