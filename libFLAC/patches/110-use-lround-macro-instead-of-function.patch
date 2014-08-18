@@ -1,0 +1,16 @@
+diff --git a/src/libFLAC/lpc.c b/src/libFLAC/lpc.c
+index 3dee02e..64d5291 100644
+--- a/src/libFLAC/lpc.c
++++ b/src/libFLAC/lpc.c
+@@ -63,9 +63,8 @@
+ #elif defined(__GNUC__)
+ #define copysign __builtin_copysign
+ #endif
+-static inline long int lround(double x) {
+-    return (long)(x + copysign (0.5, x));
+-}
++#undef lround
++#define lround(x)       ((long)((x) + copysign(0.5, (x))))
+ //If this fails, we are in the precence of a mid 90's compiler..move along...
+ #endif
+ 

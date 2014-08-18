@@ -1,0 +1,36 @@
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 47b1235..7b6d069 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -114,9 +114,7 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
+ ETAGS = etags
+ CTAGS = ctags
+ DIST_SUBDIRS = share libFLAC flac metaflac monkeys_audio_utilities \
+-	plugin_common plugin_xmms test_grabbag test_libs_common \
+-	test_libFLAC test_seeking test_streams utils libFLAC++ \
+-	test_libFLAC++
++	plugin_common plugin_xmms utils libFLAC++
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ am__relativize = \
+   dir0=`pwd`; \
+@@ -294,7 +292,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ @FLaC__HAS_XMMS_TRUE@XMMS_DIRS = plugin_common plugin_xmms
+-@FLaC__WITH_CPPLIBS_TRUE@CPPLIBS_DIRS = libFLAC++ test_libFLAC++
++@FLaC__WITH_CPPLIBS_TRUE@CPPLIBS_DIRS = libFLAC++
+ SUBDIRS = \
+ 	share \
+ 	libFLAC \
+@@ -302,11 +300,6 @@ SUBDIRS = \
+ 	metaflac \
+ 	monkeys_audio_utilities \
+ 	$(XMMS_DIRS) \
+-	test_grabbag \
+-	test_libs_common \
+-	test_libFLAC \
+-	test_seeking \
+-	test_streams \
+ 	utils \
+ 	$(CPPLIBS_DIRS)
+ 
