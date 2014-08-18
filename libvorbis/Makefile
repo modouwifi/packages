@@ -15,7 +15,7 @@ define Package/libvorbis
 	CATEGORY:=Libraries
 	TITLE:=libvorbis
 	URL:=http://mad.sourceforge.net
-	DEPENDS:=+zlib
+	DEPENDS:=+zlib +libogg
 endef
 
 define Package/libvorbis/description
@@ -24,6 +24,7 @@ endef
 
 TARGET_CFLAGS += -fPIC 
 TARGET_CXXFLAGS += -fPIC
+TARGET_LDFLAGS += -logg
 define Build/Compile
 	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
 		DESTDIR="$(PKG_INSTALL_DIR)" \
