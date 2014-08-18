@@ -27,7 +27,8 @@ endef
 TARGET_CFLAGS+=-fPIC 
 TARGET_CXXFLAGS+=-fPIC
 define Build/Compile
-	$(call Build/Compile/Default, -f Makefile)
+	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
+		DESTDIR="$(PKG_INSTALL_DIR)" all install
 endef
 
 define Build/Configure
@@ -43,52 +44,30 @@ define Build/Configure
 		--disable-ffmpeg \
 		--disable-ffplay \
 		--disable-ffserver \
-		--disable-vhook
+		--disable-vhook \
+		--cross-prefix=mipsel-linux-
 endef
 
-LIBAVUTIL_HEADERS= $(PKG_BUILD_DIR)/libavutil/adler32.h \
-          $(PKG_BUILD_DIR)/libavutil/avstring.h \
-          $(PKG_BUILD_DIR)/libavutil/avutil.h \
-          $(PKG_BUILD_DIR)/libavutil/base64.h \
-          $(PKG_BUILD_DIR)/libavutil/common.h \
-          $(PKG_BUILD_DIR)/libavutil/crc.h \
-          $(PKG_BUILD_DIR)/libavutil/fifo.h \
-          $(PKG_BUILD_DIR)/libavutil/intfloat_readwrite.h \
-          $(PKG_BUILD_DIR)/libavutil/log.h \
-          $(PKG_BUILD_DIR)/libavutil/lzo.h \
-          $(PKG_BUILD_DIR)/libavutil/mathematics.h \
-          $(PKG_BUILD_DIR)/libavutil/md5.h \
-          $(PKG_BUILD_DIR)/libavutil/mem.h \
-          $(PKG_BUILD_DIR)/libavutil/pixfmt.h \
-          $(PKG_BUILD_DIR)/libavutil/random.h \
-          $(PKG_BUILD_DIR)/libavutil/rational.h \
-          $(PKG_BUILD_DIR)/libavutil/sha1.h
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{so,so.52,so.52.20.1} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{so,so.52,so.52.1.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{so,so.52,so.52.31.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{so,so.49,so.49.15.0} $(1)/usr/lib
 
-LIBAVFORMAT_HEADERS = $(PKG_BUILD_DIR)/libavformat/avformat.h \
-					  $(PKG_BUILD_DIR)/libavformat/avio.h
-
-LIBAVCODEC_HEADERS = $(PKG_BUILD_DIR)/libavcodec/avcodec.h \
-					 $(PKG_BUILD_DIR)/libavcodec/opt.h \
-					 $(PKG_BUILD_DIR)/libavcodec/vdpau.h \
-					 $(PKG_BUILD_DIR)/libavcodec/xvmc.h
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavcodec $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavdevice $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavformat $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavutil $(1)/usr/include
+endef
 
 define Package/libav/install
 	$(INSTALL_DIR) $(1)/usr/lib
-
-	$(INSTALL_DIR) $(1)/usr/include/libavutil
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavutil/libavutil.so $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavutil/libavutil.so.* $(1)/usr/lib
-	$(INSTALL_DATA) $(LIBAVUTIL_HEADERS) $(1)/usr/include/libavutil
-
-	$(INSTALL_DIR) $(1)/usr/include/libavformat	
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavformat/libavformat.so $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavformat/libavformat.so.* $(1)/usr/lib
-	$(INSTALL_DATA) $(LIBAVFORMAT_HEADERS) $(1)/usr/include/libavformat
-
-	$(INSTALL_DIR) $(1)/usr/include/libavcodec
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavcodec/libavcodec.so $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libavcodec/libavcodec.so.* $(1)/usr/lib
-	$(INSTALL_DATA) $(LIBAVCODEC_HEADERS) $(1)/usr/include/libavcodec
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{so,so.52,so.52.20.1} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{so,so.52,so.52.1.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{so,so.52,so.52.31.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{so,so.49,so.49.15.0} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,libav))
