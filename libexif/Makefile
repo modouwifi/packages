@@ -37,7 +37,7 @@ define Build/Configure
 		--host=mipsel-linux
 endef
 
-define Package/libexif/installDev
+define Package/libexif/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libexif $(1)/usr/include
 	$(INSTALL_DIR) $(1)/usr/lib
