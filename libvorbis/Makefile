@@ -43,12 +43,16 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/vorbis $(1)/usr/include
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbis.{a,so,so.0,so.0.8.2} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbisenc.{a,so,so.2,so.2.0.10} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbisfile.{a,so,so.3,so.3.3.6} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbis.{a,so,so.0,so.0.4.7} $(1)/usr/lib
 endef
 
 define Package/libvorbis/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbis.{a,so,so.0,so.0.8.2} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbisenc.{a,so,so.2,so.2.0.10} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbisfile.{a,so,so.3,so.3.3.6} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libvorbis.{a,so,so.0,so.0.4.7} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,libvorbis))
