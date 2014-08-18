@@ -1,24 +1,25 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=libexif
-PKG_VERSION:=0.6.21
-PKG_RELEASE:=0.6
+PKG_NAME:=libid3tag
+PKG_VERSION:=0.15.1b
+PKG_RELEASE:=0.15.1b
 
 PKG_BUILD_DIR=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/libexif
-PKG_MD5SUM:=9321c409a3e588d4a99d63063ef4bbb7
+PKG_SOURCE_URL:=@SF/mad/libid3tag
+PKG_MD5SUM:=e5808ad997ba32c498803822078748c3
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/libexif
+define Package/libid3tag
 	CATEGORY:=Libraries
-	TITLE:=libexif
-	URL:=http://libexif.sourceforge.net
+	TITLE:=libid3tag
+	URL:=http://mad.sourceforge.net
+	DEPENDS:=+zlib
 endef
 
-define Package/libexif/description
-	Libexif
+define Package/libid3tag/description
+	libid3tag
 endef
 
 TARGET_CFLAGS += -fPIC 
@@ -39,14 +40,14 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/libexif $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/id3tag.h $(1)/usr/include
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libexif.{a,so,so.12,so.12.3.3} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libid3tag.{a,so,so.0,so.0.3.0} $(1)/usr/lib
 endef
 
-define Package/libexif/install
+define Package/libid3tag/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libexif.{a,so,so.12,so.12.3.3} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libid3tag.{a,so,so.0,so.0.3.0} $(1)/usr/lib
 endef
 
-$(eval $(call BuildPackage,libexif))
+$(eval $(call BuildPackage,libid3tag))
