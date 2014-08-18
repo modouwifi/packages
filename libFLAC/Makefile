@@ -30,13 +30,14 @@ define Build/Compile
 		all install
 endef
 
+TARGET_LDFLAGS += -logg -liconv
 define Build/Configure
 	cd $(PKG_BUILD_DIR) && \
-		CC=mipsel-linux-cc CFLAGS="-fPIC" \
+		CC="$(TARGET_CC)" LDLAGS="$(TARGET_LDFLAGS)" \
 		./configure \
 		--prefix=/usr \
 		--with-ogg="$(STAGING_DIR)/usr" \
-		--with-libiconv-perfix="$(STAGING_DIR)/usr" \
+		--with-libiconv-prefix="$(STAGING_DIR)/usr" \
 		--host=$(ARCH)-linux \
 	    --disable-thorough-tests \
 		--disable-oggtest \
