@@ -44,7 +44,6 @@ define Build/Configure
 		--disable-ffmpeg \
 		--disable-ffplay \
 		--disable-ffserver \
-		--disable-vhook \
 		--cross-prefix=mipsel-linux-
 endef
 
