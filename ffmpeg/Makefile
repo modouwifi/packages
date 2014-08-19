@@ -54,7 +54,7 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavfilter.{a,so,so.4,so.4.11.100} $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{a,so,so.55,so.55.48.100} $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{a,so,so.52,so.52.92.100} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
 
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavcodec $(1)/usr/include
@@ -72,7 +72,7 @@ define Package/ffmpeg/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavfilter.{a,so,so.4,so.4.11.100} $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{a,so,so.55,so.55.48.100} $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{a,so,so.52,so.52.92.100} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,ffmpeg))
