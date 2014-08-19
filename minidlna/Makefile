@@ -41,13 +41,14 @@ define Build/Configure
 		--host=mipsel-linux \
 		--build=x86_64-suse-linux \
 		--prefix=/usr \
+		--program-prefix="" \
 		LDFLAGS="$(TARGET_LDFLAGS)" \
 		CFLAGS="$(TARGET_CFLAGS)"
 endef
 
 define Package/minidlna/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(PKG_INSTALL_DIR)/usr/bin/minidlnad $(1)/usr/bin
+	$(CP) $(PKG_INSTALL_DIR)/usr/sbin/minidlnad $(1)/usr/sbin
 endef
 
 $(eval $(call BuildPackage,minidlna))
