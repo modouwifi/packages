@@ -18,7 +18,8 @@ define Package/minidlna
 	TITLE:=Minilna
 	URL:=http://minidlna.sourceforge.net
 	DEPENDS:=+libexif +jpeg +libid3tag \
-		+libFLAC +libvorbis +libogg +libsqlite3 +libav
+		+libFLAC +libvorbis +libogg +libsqlite3 \
+		+libavformat +libavcodec +libavutil
 endef
 
 define Package/minidlna/description
