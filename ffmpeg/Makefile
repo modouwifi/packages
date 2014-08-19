@@ -17,7 +17,7 @@ define Package/ffmpeg
 	DEFAULT:=y
 	TITLE:=ffmpeg
 	URL:=https://ffmpeg.org
-	DEPENDS:=+zlib
+	DEPENDS:=+zlib +libpthread
 endef
 
 define Package/ffmpeg/description
@@ -49,24 +49,30 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{so,so.52,so.52.20.1} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{so,so.52,so.52.1.0} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{so,so.52,so.52.31.0} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{so,so.49,so.49.15.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{a,so,so.55,so.55.69.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{a,so,so.55,so.55.13.102} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavfilter.{a,so,so.4,so.4.11.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{a,so,so.55,so.55.48.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{a,so,so.52,so.52.92.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
 
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavcodec $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavdevice $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavfilter $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavformat $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libavutil $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libswresample $(1)/usr/include
 endef
 
 define Package/ffmpeg/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{so,so.52,so.52.20.1} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{so,so.52,so.52.1.0} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{so,so.52,so.52.31.0} $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{so,so.49,so.49.15.0} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavcodec.{a,so,so.55,so.55.69.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavdevice.{a,so,so.55,so.55.13.102} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavfilter.{a,so,so.4,so.4.11.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavformat.{a,so,so.55,so.55.48.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavutil.{a,so,so.52,so.52.92.100} $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libavswresample.{a,so,so.0,so.0.19.100} $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,ffmpeg))
