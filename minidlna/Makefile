@@ -34,8 +34,11 @@ define Build/Compile
 	$(call Build/Compile/Default, -f Makefile CFLAGS="$(TARGET_CFLAGS)")
 endef
 
+TARGET_LDFLAGS += -lavformat
 define Build/Configure
-	$(call Build/Configure/Default, --prefix=/usr LDFLAGS="$(TARGET_LDFLAGS)" CFLAGS="$(TARGET_CFLAGS)")
+	$(call Build/Configure/Default, --prefix=/usr \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
+		CFLAGS="$(TARGET_CFLAGS)")
 endef
 
 define Package/minidlna/install
