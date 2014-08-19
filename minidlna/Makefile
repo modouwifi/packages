@@ -18,32 +18,36 @@ define Package/minidlna
 	TITLE:=Minilna
 	URL:=http://minidlna.sourceforge.net
 	DEPENDS:=+libexif +jpeg +libid3tag \
-		+libFLAC +libvorbis +libogg +libsqlite3 \
-		+libavformat +libavcodec +libavutil
+		     +libFLAC +libvorbis +libogg \
+			 +libsqlite3 +ffmpeg
 endef
 
 define Package/minidlna/description
 	MinidLNA
 endef
 
-TARGET_CFLAGS+=-fPIC \
-			   -I$(STAGING_DIR)/root-ramips/usr/include
-TARGET_CXXFLAGS+=-fPIC \
-				 -I$(STAGING_DIR)/root-ramips/usr/include
+TARGET_CFLAGS += -fPIC -I$(STAGING_DIR)/usr/include
+TARGET_CXXFLAGS += -fPIC -I$(STAGING_DIR)/usr/include
+
 define Build/Compile
-	$(call Build/Compile/Default, -f Makefile CFLAGS="$(TARGET_CFLAGS)")
+	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
+		DESTDIR="$(PKG_INSTALL_DIR)" all install
 endef
 
 define Build/Configure
-	$(call Build/Configure/Default, --prefix=/usr \
+	cd $(PKG_BUILD_DIR) && autoconf && \
+		./configure \
+		--target=mipsel-linux \
+		--host=mipsel-linux \
+		--build=x86_64-suse-linux \
+		--prefix=/usr \
 		LDFLAGS="$(TARGET_LDFLAGS)" \
-		CFLAGS="$(TARGET_CFLAGS)" \
-		LIBS="-lavformat")
+		CFLAGS="$(TARGET_CFLAGS)"
 endef
 
 define Package/minidlna/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ $(1)/usr/bin
+	$(CP) $(PKG_INSTALL_DIR)/usr/bin/minidlnad $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,minidlna))
