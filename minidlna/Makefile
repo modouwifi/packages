@@ -48,7 +48,7 @@ endef
 
 define Package/minidlna/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(PKG_INSTALL_DIR)/usr/sbin/minidlnad $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/minidlnad $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,minidlna))
