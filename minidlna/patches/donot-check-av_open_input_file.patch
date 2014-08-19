@@ -1,0 +1,21 @@
+diff --git a/configure.ac b/configure.ac
+index 3a8a54c..788cd38 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -434,13 +434,11 @@ for dir in "" /usr/local $SEARCH_DIR; do
+     if test -n "$dir"; then
+         LDFLAGS="$LDFLAGS -L$dir/lib"
+     fi
+-    AC_CHECK_LIB([avformat], [av_open_input_file], [LIBAVFORMAT_LIBS="-lavformat"],
+-		 [AC_CHECK_LIB([avformat], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat"],
+-		  [unset ac_cv_lib_avformat_av_open_input_file; unset ac_cv_lib_avformat_avformat_open_input; LDFLAGS="$LDFLAGS_SAVE"; continue])])
++	AC_CHECK_LIB([avformat], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat"],
++		  [unset ac_cv_lib_avformat_avformat_open_input; LDFLAGS="$LDFLAGS_SAVE"; continue])
+     break
+ done
+-if test x"$ac_cv_lib_avformat_av_open_input_file" != x"yes" &&
+-   test x"$ac_cv_lib_avformat_avformat_open_input" != x"yes"; then
++if test x"$ac_cv_lib_avformat_avformat_open_input" != x"yes"; then
+    AC_MSG_ERROR([Could not find libavformat - part of ffmpeg])
+ fi
+ AC_SUBST(LIBAVFORMAT_LIBS)
