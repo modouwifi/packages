@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=sqlite3
+PKG_NAME:=libsqlite3
 PKG_VERSION:=27392118af
 PKG_RELEASE:=27392118af
 
@@ -11,17 +11,16 @@ PKG_MD5SUM:=bb43d78e5a951e1498eb073df01c0a8f
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/sqlite3
-	SECTION:=libs
+define Package/libsqlite3
 	CATEGORY:=Libraries
 	SUBMENU:=Database
-	TITLE:=sqlite3
+	TITLE:=libsqlite3
 	DEPENDS:=+libcurses +libpthread
 	URL:=http://www.sqlite.org
 endef
 
-define Package/sqlite3/description
-	sqlite3
+define Package/libsqlite3/description
+	libsqlite3
 endef
 
 TARGET_CFLAGS+=-fPIC 
@@ -50,9 +49,9 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/sqlite3ext.h $(1)/usr/include
 endef
 
-define Package/sqlite3/install
+define Package/libsqlite3/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libsqlite3.{a,so,so.0,so.0.8.6} $(1)/usr/lib
 endef
 
-$(eval $(call BuildPackage,sqlite3))
+$(eval $(call BuildPackage,libsqlite3))
