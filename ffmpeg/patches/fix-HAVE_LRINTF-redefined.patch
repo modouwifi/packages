@@ -1,0 +1,11 @@
+diff --git a/libavutil/mips/libm_mips.h b/libavutil/mips/libm_mips.h
+index 8853bbc..33e6651 100644
+--- a/libavutil/mips/libm_mips.h
++++ b/libavutil/mips/libm_mips.h
+@@ -69,5 +69,6 @@ static av_always_inline av_const long int lrintf_mips(float x)
+ #undef lrintf
+ #define lrintf(x)   lrintf_mips(x)
+ 
++#undef HAVE_LRINTF
+ #define HAVE_LRINTF 1
+ #endif /* AVUTIL_LIBM_MIPS_H */
